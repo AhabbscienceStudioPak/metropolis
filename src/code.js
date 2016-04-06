@@ -49,12 +49,12 @@ function drawMarchingSquaresContours(divId) {
                d3.rgb(180,180,180)]);
 
        var yMetroScale = d3.scale.linear()
-         .range([0,height])
-         .domain([-2,2]);
+         .domain([-2,2.6])
+         .range([0,height]);
 
        var xMetroScale = d3.scale.linear()
          .range([0,width])
-         .domain([-2,2]);
+         .domain([-2,2.6]);
 
         var metroLine = d3.svg.line()
                               .x(point => xMetroScale(point[0]))
@@ -81,6 +81,12 @@ function drawMarchingSquaresContours(divId) {
            .style("opacity",0.6)
            .style("fill", "none")
            .attr("d", metroLine(chain));
+        console.log(chain);
+
+        var startPoint = svg.append("circle")
+            .attr("cx", xMetroScale(-1.8))
+            .attr("cy", xMetroScale(-1.6))
+            .attr("r", 3);
 
         var lineLen = path.node().getTotalLength();
         path.attr("stroke-dasharray", // 2. pattern big enough to hide line
