@@ -13,6 +13,12 @@ export default function DrawMetroDist(iterations, xDomain, yDomain, width, numPo
 
     const metroDistParams = [iterations, xDomain, yDomain, width, numPoints];
 
+    const drawOnUiThread = () => {
+      const chainDist = genMetroDist(...metroDistParams);
+      drawDist(chainDist);
+      readyFunc();
+    };
+
     // Use web worker to generate distribution if possible
     if(typeof(Worker) !== "undefined") {
       var genMetroDistWorker = require("worker!./genMetroDist.js");
@@ -22,10 +28,8 @@ export default function DrawMetroDist(iterations, xDomain, yDomain, width, numPo
         drawDist(e.data);
         if (readyFunc) readyFunc();
       }
+      worker.onerror = drawOnUiThread;
     }
-    else {
-      const chainDist = genMetroDist(...metroDistParams);
-      drawDist(chainDist);
-    }
+    else drawOnUiThread();
 }
 

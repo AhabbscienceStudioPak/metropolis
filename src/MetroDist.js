@@ -49,7 +49,7 @@ export default class MetroDist extends Component {
     if (!this.state.svg) return;
 
     const { iterations, size, numPoints, xDomain, yDomain } = this.props;
-    const readyFunc = () => {this.setState({ready: true}); console.log('hey');};
+    const readyFunc = () => this.setState({ready: true});
     this.setState({ready: false});
     DrawMetroDist(iterations, xDomain, yDomain, size, numPoints, this.state.svg, readyFunc);
   }
