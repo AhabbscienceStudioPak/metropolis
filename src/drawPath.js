@@ -12,6 +12,7 @@ export default function drawPath(xDomain, yDomain, width, height, data, svg) {
         .y(point => yScale(point[1]));
 
    const path = svg.append("path")
+       .attr("id", "metroPath")
        .style("stroke","red")
        .style("opacity",0.6)
        .style("fill", "none")

@@ -17,8 +17,8 @@ export default class MetroPath extends Component {
   constructor () {
     super();
     this.draw = this.draw.bind(this);
-    this.redraw = this.redraw.bind(this);
-    this.state = { ele: null };
+    this.drawPath = this.drawPath.bind(this);
+    this.state = { svg: null };
   }
 
   static propTypes = {
@@ -30,27 +30,22 @@ export default class MetroPath extends Component {
 
   draw(ele, withPath) {
     const { iterations, size, numPoints, domain } = this.props;
-    this.state.ele = ele;
-
-    // Clear out anything previously drawn
-    d3.select(ele).selectAll("svg").remove();
 
     // Create a fresh svg
     const svg = d3.select(ele)
                   .append("svg")
                   .attr("width", size)
                   .attr("height", size);
+    this.state.svg = svg;
 
     // Draw Rosenbrock plot & start point
     Rosenbrock(domain, size, numPoints, svg);
     drawCircle(domain, domain, size, size, svg);
-
-    // Draw metropolis path if required
-    if (withPath)  DrawMetroPath(iterations, domain, size, numPoints, svg);
   };
 
-  redraw() {
-    if (this.state.ele) this.draw(this.state.ele, true);
+  drawPath() {
+    const { iterations, size, numPoints, domain } = this.props;
+    if (this.state.svg) DrawMetroPath(iterations, domain, size, numPoints, this.state.svg);
   }
 
   render() {
@@ -59,7 +54,7 @@ export default class MetroPath extends Component {
         <CardContainer title="Metropolis-Hastings pathing" subtitle="Rosenbrock function " width={500}>
           <div ref={this.draw}></div>
           <br></br>
-          <RaisedButton label="Run" onClick={this.redraw}/>
+          <RaisedButton label="Run" onClick={this.drawPath}/>
         </CardContainer>
     );
 

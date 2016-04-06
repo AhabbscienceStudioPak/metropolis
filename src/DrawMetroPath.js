@@ -5,13 +5,11 @@ import drawPath from "./drawPath.js";
 
 
 export default function DrawMetroPath(iterations, domain, width, numPoints, svg) {
+    d3.select("#metroPath").remove();
     // Generate data 
     const chain = metropolisHastings(iterations).filter((_, i) => i % 2 == 0);
 
     // Draw it
-    svg.append("svg")
-          .attr("width", width)
-          .attr("height", width);
     drawPath(domain, domain, width, width, chain, svg);
 }
 
