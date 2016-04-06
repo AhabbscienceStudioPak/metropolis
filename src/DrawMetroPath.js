@@ -4,9 +4,9 @@ import metropolisHastings from "./metropolis.js";
 import drawPath from "./drawPath.js";
 
 
-export default function DrawMetroPath(domain, width, numPoints, svg) {
+export default function DrawMetroPath(iterations, domain, width, numPoints, svg) {
     // Generate data 
-    const chain = metropolisHastings(1000).filter((_, i) => i % 2 == 0);
+    const chain = metropolisHastings(iterations).filter((_, i) => i % 2 == 0);
 
     // Draw it
     svg.append("svg")

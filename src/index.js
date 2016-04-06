@@ -5,6 +5,6 @@ import { render } from 'react-dom';
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-render(<MetroPath size={500} numPoints={300} domain={[-2,2.6]}/>, document.getElementById('mount'));
+render(<MetroPath iterations={1000} size={500} numPoints={300} domain={[-2,2.6]}/>, document.getElementById('mount'));
 
 
