@@ -15,7 +15,7 @@ export default class MetroDist extends Component {
     super();
     this.draw = this.draw.bind(this);
     this.redraw= this.redraw.bind(this);
-    this.state = { svg: null, ran: false };
+    this.state = { svg: null, ready: true };
   }
 
   static propTypes = {
@@ -49,18 +49,19 @@ export default class MetroDist extends Component {
     if (!this.state.svg) return;
 
     const { iterations, size, numPoints, xDomain, yDomain } = this.props;
-    DrawMetroDist(iterations, xDomain, yDomain, size, numPoints, this.state.svg);
+    const readyFunc = () => {this.setState({ready: true}); console.log('hey');};
+    this.setState({ready: false});
+    DrawMetroDist(iterations, xDomain, yDomain, size, numPoints, this.state.svg, readyFunc);
   }
 
   render() {
-    const { ran } = this.state;
+    const { ready } = this.state;
     return (
         <div>
           <div ref={this.draw}></div>
           <br></br>
           <br></br>
-          <RaisedButton label="Run" onClick={this.redraw} style={{marginRight: "1em"}}/>
-          <small>(Might take a while for a high number of iterations)</small>
+          <RaisedButton label={ready ? "Run" : "Generating..."} onClick={this.redraw} style={{marginRight: "1em"}} disabled={!ready}/>
         </div>
     );
 
