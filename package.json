@@ -23,7 +23,8 @@
     "react-tap-event-plugin": "^0.2.2",
     "webpack": "^1.12.14",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-hot-middleware": "^2.10.0",
+    "worker-loader": "^0.7.0"
   },
   "dependencies": {
     "d3": "^3.5.16",

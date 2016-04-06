@@ -3,7 +3,7 @@ import {assoc} from "ramda";
 import metropolisHastings from "./metropolis.js";
 import drawPath from "./drawPath.js";
 import Rosenbrock from "./Rosenbrock.js";
-import DrawMetroPath from "./DrawMetroPath.js";
+import MetroDist from "./MetroDist.js";
 import drawCircle from "./drawCircle.js";
 import NumberEditor from "react-number-editor";
 import MetroPath from "./MetroPath.js";
@@ -40,7 +40,7 @@ export default class MetroDistControls extends Component {
           <NumberEditor
             step={1000}
             value={iterations}
-            min={5000}
+            min={1000}
             onValueChange={this.updateIterations}
             style={{width: "5em", marginRight: "2em"}}
             max={100000}
@@ -48,7 +48,7 @@ export default class MetroDistControls extends Component {
             decimals={0}
           />
 
-          <MetroPath
+          <MetroDist
             size={size}
             numPoints={numPoints}
             xDomain={xDomain}

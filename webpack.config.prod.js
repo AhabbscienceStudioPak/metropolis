@@ -4,6 +4,12 @@ var webpack = require('webpack');
 module.exports = {
   devtool: "source-map",
   entry: './src/index.js',
+  worker: {
+    output: {
+      filename: "hash.worker.js",
+      chunkFilename: "[id].hash.worker.js"
+    }
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
