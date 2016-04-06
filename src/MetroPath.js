@@ -5,13 +5,11 @@ import drawPath from "./drawPath.js";
 import Rosenbrock from "./Rosenbrock.js";
 import DrawMetroPath from "./DrawMetroPath.js";
 import drawCircle from "./drawCircle.js";
+import MetroControls from "./MetroControls.js";
 import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import CardContainer from "./CardContainer.js";
 import "./interpolate";
-
-
-
 
 export default class MetroPath extends Component {
   constructor () {
@@ -24,12 +22,13 @@ export default class MetroPath extends Component {
   static propTypes = {
     size: PropTypes.number.isRequired,
     numPoints: PropTypes.number.isRequired,
-    domain: PropTypes.array.isRequired,
+    xDomain: PropTypes.array.isRequired,
+    yDomain: PropTypes.array.isRequired,
     iterations: PropTypes.number.isRequired
   };
 
   draw(ele, withPath) {
-    const { iterations, size, numPoints, domain } = this.props;
+    const { iterations, size, numPoints, xDomain, yDomain } = this.props;
 
     // Create a fresh svg
     const svg = d3.select(ele)
@@ -39,23 +38,23 @@ export default class MetroPath extends Component {
     this.state.svg = svg;
 
     // Draw Rosenbrock plot & start point
-    Rosenbrock(domain, size, numPoints, svg);
-    drawCircle(domain, domain, size, size, svg);
+    Rosenbrock(xDomain, yDomain, size, numPoints, svg);
+    drawCircle(xDomain, yDomain, size, size, svg);
   };
 
   drawPath() {
-    const { iterations, size, numPoints, domain } = this.props;
-    if (this.state.svg) DrawMetroPath(iterations, domain, size, numPoints, this.state.svg);
+    const { iterations, size, numPoints, xDomain, yDomain } = this.props;
+    if (this.state.svg) DrawMetroPath(iterations, xDomain, yDomain, size, numPoints, this.state.svg);
   }
 
   render() {
     const { drawing } = this.state;
     return (
-        <CardContainer title="Metropolis-Hastings pathing" subtitle="Rosenbrock function " width={500}>
+        <div>
           <div ref={this.draw}></div>
           <br></br>
           <RaisedButton label="Run" onClick={this.drawPath}/>
-        </CardContainer>
+        </div>
     );
 
   }

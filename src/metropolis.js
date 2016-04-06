@@ -1,6 +1,5 @@
-var perturb = x => x + (Math.random() - 0.5)
-var rosenbrock = (x, y) => Math.pow(1 - x, 2) + (100 * Math.pow(y - Math.pow(x, 2), 2));
-import { curry } from "ramda";
+const perturb = x => x + (Math.random() - 0.5)
+const rosenbrock = (x, y) => Math.pow(1 - x, 2) + (100 * Math.pow(y - Math.pow(x, 2), 2));
 
 export default function metropolisHastings(iterations) {
   var i = 0;
@@ -13,7 +12,7 @@ export default function metropolisHastings(iterations) {
     var newlik = rosenbrock(...candidate);
     var acceptProbability = oldlik / newlik;
     oldlik = newlik;
-    if (Math.random() < acceptProbability) {
+    if ((Math.random()) < Math.min(1,acceptProbability)) {
       current = candidate;
     }
     chain.push(current);
