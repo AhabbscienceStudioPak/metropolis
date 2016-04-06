@@ -1,7 +1,6 @@
 import MarchingSquaresJS from "./MarchingSquares.js";
 import {assoc} from "ramda";
 import metropolisHastings from "./metropolis.js";
-import drawContour from "./drawCountour.js";
 import drawPath from "./drawPath.js";
 import Rosenbrock from "./Rosenbrock.js";
 import DrawMetroPath from "./DrawMetroPath.js";
@@ -11,6 +10,7 @@ import MetroPath from "./MetroPath.js";
 import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import CardContainer from "./CardContainer.js";
+import AutoSize from "./AutoSize.js";
 import "./interpolate";
 
 export default class MetroControls extends Component {
@@ -40,10 +40,10 @@ export default class MetroControls extends Component {
           <NumberEditor
             step={500}
             value={iterations}
-            min={1}
+            min={10}
             onValueChange={this.updateIterations}
             style={{width: "5em", marginRight: "2em"}}
-            max={10000}
+            max={20000}
             label="Iterations"
             decimals={0}
           />

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from "react-dom";
-import drawContour from "./drawCountour.js";
+import drawContour from "./drawContour.js";
 import drawCircle from "./drawCircle.js";
 import { map } from "ramda";
 import interpolate from "./interpolate";

@@ -1,6 +1,5 @@
 import MarchingSquaresJS from "./MarchingSquares.js";
 import metropolisHastings from "./metropolis.js";
-import drawContour from "./drawCountour.js";
 import drawPath from "./drawPath.js";
 import Rosenbrock from "./Rosenbrock.js";
 import DrawMetroPath from "./DrawMetroPath.js";

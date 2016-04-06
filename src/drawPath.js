@@ -1,3 +1,10 @@
+const durationMultiplier = dataSize => {
+  if (dataSize < 500) return dataSize *8;
+  if (dataSize < 2000) return dataSize*2;
+  if (dataSize < 8000) return dataSize;
+  return dataSize/2;
+};
+
 export default function drawPath(xDomain, yDomain, width, height, data, svg) {
    const yScale = d3.scale.linear()
      .domain(yDomain)
@@ -24,6 +31,6 @@ export default function drawPath(xDomain, yDomain, width, height, data, svg) {
          .attr("stroke-dashoffset",lineLen); 
 
     path.transition()
-           .duration(data.length * 2)
+           .duration(durationMultiplier(data.length))
            .attr("stroke-dashoffset", 0); 
 }
