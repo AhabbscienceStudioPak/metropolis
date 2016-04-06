@@ -43,7 +43,7 @@ export default class MetroDistControls extends Component {
             min={1000}
             onValueChange={this.updateIterations}
             style={{width: "5em", marginRight: "2em"}}
-            max={100000}
+            max={500000}
             label="Iterations"
             decimals={0}
           />
