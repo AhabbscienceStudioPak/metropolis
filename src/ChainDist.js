@@ -1,20 +1,32 @@
-import { compose, path, forEach, prop, map, repeat, curry, find, last } from "ramda";
+import { drop, compose, path, forEach, prop, map, repeat, curry, find, last } from "ramda";
 import interpolate from "./interpolate";
 
+
 const findBucket = curry((propName, bucketList, num) => {
-  var i = 0;
-  for (i; i < bucketList.length - 1; i++) {
-    const getVal = prop(propName),
-          maxVal = getVal(last(bucketList));
+  const getVal = prop(propName),
+        maxVal = getVal(last(bucketList)),
+        minVal = getVal(bucketList[0]);
 
-    if (num > maxVal) break;
+  if (num >= maxVal) return undefined;
+  if (num <= minVal) return undefined;
 
-    const curr = bucketList[i],
-          next = bucketList[i+1],
-          currVal = getVal(curr),
-          nextVal = getVal(next);
+  var length = bucketList.length;
+  var curr = 0;
+  var start = 0;
+  var end = length;
+  var middle = 0;
 
-    if (num > currVal && num < nextVal) return curr;
+  while (true) {
+    if (start > end) return undefined;
+    middle = Math.round((start + end)/2);
+    if (middle + 1 >= length) return undefined;
+    const currVal = getVal(bucketList[middle]);
+    const nextVal = getVal(bucketList[middle+1]);
+    if (num >= currVal && num <= nextVal) {
+      return bucketList[middle];
+    }
+    if (num < currVal)  end = middle - 1;
+    if (num > currVal)  start = middle + 1;
   }
   return undefined;
 });
@@ -42,7 +54,6 @@ export default function ChainDist(xDomain, yDomain, numPoints, chain) {
 
   const findX = findBucket("x", buckets);
   const findYInBucket = findBucket("y");
-  const twobuck = findX(3);
 
   forEach(xy => {
     const xBucket = findX(xy[0]);
@@ -50,7 +61,7 @@ export default function ChainDist(xDomain, yDomain, numPoints, chain) {
     const xyBucket = findYInBucket(xBucket.ys, xy[1]);
     if (!xyBucket) return;
     xyBucket.bucket += 1;
-  }, chain);
+  }, drop(chain.length * 0.1, chain));
 
   return bucketsToPlotData(buckets);
 }
