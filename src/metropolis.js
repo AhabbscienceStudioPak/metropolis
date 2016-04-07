@@ -1,4 +1,4 @@
-function normalRandom(mean, variance) {
+function normalRandom(mean, variance, acceptFunc) {
   if (mean == undefined)
     mean = 0.0;
   if (variance == undefined)
@@ -19,9 +19,9 @@ function normalRandom(mean, variance) {
 
 const rosenbrock = (x, y) => Math.pow(1 - x, 2) + (100 * Math.pow(y - Math.pow(x, 2), 2));
 
-export default function metropolisHastings(iterations, variance) {
+export default function metropolisHastings(iterations, variance, acceptFunc) {
   var i = 0;
-  var current = [-1.8, -1.6];
+  var current = [0, 7];
   var chain = [current];
   var oldlik = rosenbrock(...current);
   const perturb = x => x + (normalRandom(0,variance));
@@ -30,7 +30,7 @@ export default function metropolisHastings(iterations, variance) {
   for (i; i < iterations; i++) {
     var candidate = current.map(perturb);
     var newlik = rosenbrock(...candidate);
-    var acceptProbability = 1/(newlik/oldlik);
+    var acceptProbability = oldlik/newlik;
 
     if (Math.random() < acceptProbability) {
       oldlik = newlik;
@@ -39,6 +39,6 @@ export default function metropolisHastings(iterations, variance) {
     }
     chain.push(current);
   }
-    console.log("accepted:", (accepted/iterations)*100+"%");
+  if (acceptFunc) acceptFunc(accepted/iterations*100);
   return chain;
 };

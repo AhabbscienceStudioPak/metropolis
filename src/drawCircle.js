@@ -10,7 +10,7 @@ export default function drawCircle(xDomain, yDomain, width, height, svg) {
     svg.append("circle")
         .attr("fill", "red")
         .attr("stroke", "black")
-        .attr("cx", xScale(-1.8))
-        .attr("cy", yScale(-1.6))
+        .attr("cx", xScale(0))
+        .attr("cy", yScale(7))
         .attr("r", 4);
 }

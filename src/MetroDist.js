@@ -23,11 +23,13 @@ export default class MetroDist extends Component {
     numPoints: PropTypes.number.isRequired,
     xDomain: PropTypes.array.isRequired,
     yDomain: PropTypes.array.isRequired,
-    iterations: PropTypes.number.isRequired
+    iterations: PropTypes.number.isRequired,
+    variance: PropTypes.number.isRequired,
+    acceptFunc: PropTypes.func.isRequired
   };
 
   draw(ele, withPath) {
-    const { iterations, size, numPoints, xDomain, yDomain } = this.props;
+    const { iterations, size, numPoints, xDomain, yDomain, variance, acceptFunc } = this.props;
     const first = !this.state.svg;
 
     // Create a fresh svg
@@ -40,18 +42,17 @@ export default class MetroDist extends Component {
 
     // Draw metropolis distribution
     if (!first) {
-      DrawMetroDist(iterations, xDomain, yDomain, size, numPoints, svg);
+      DrawMetroDist(iterations, xDomain, yDomain, size, numPoints, svg, variance, acceptFunc);
       this.setState({ran, true}); 
     }
   };
 
   redraw() {
     if (!this.state.svg) return;
-
-    const { iterations, size, numPoints, xDomain, yDomain } = this.props;
     const readyFunc = () => this.setState({ready: true});
     this.setState({ready: false});
-    DrawMetroDist(iterations, xDomain, yDomain, size, numPoints, this.state.svg, readyFunc);
+    const { iterations, size, numPoints, xDomain, yDomain, variance, acceptFunc } = this.props;
+    DrawMetroDist(iterations, xDomain, yDomain, size, numPoints, this.state.svg, readyFunc, variance, acceptFunc);
   }
 
   componentDidMount() {

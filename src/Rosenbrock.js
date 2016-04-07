@@ -12,8 +12,7 @@ export default function Rosenbrock(xDomain, yDomain, width, numPoints, svg ) {
   const xPoints = interpolate(numPoints, ...xDomain);
   const yPoints = interpolate(numPoints, ...yDomain);
   const plotRosenbrock = (xData, yData) => map(x => map(y => rosenbrock(x, y), yData), xData);
-  const data = plotRosenbrock(xPoints, yPoints);
-  console.log(data.length);
+  const data = d3.transpose(plotRosenbrock(xPoints, yPoints));
 
   // Draw it
   drawContour(svg, data, width);

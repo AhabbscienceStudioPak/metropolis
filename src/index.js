@@ -13,7 +13,7 @@ class App extends Component {
     return (
         <div>
           <MetroControls iterations={1000} size={500} numPoints={500} xDomain={[-3, 3]} yDomain={[-3, 9]}/>
-          <MetroDistControls iterations={1000} size={500} numPoints={100} xDomain={[-4, 4]} yDomain={[-2, 8]}/>
+          <MetroDistControls iterations={1000} size={500} numPoints={100} xDomain={[-3, 3]} yDomain={[-3, 9]}/>
         </div>
     );
   }

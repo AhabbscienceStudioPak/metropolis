@@ -1,8 +1,8 @@
 import MarchingSquaresJS from "./MarchingSquares.js";
 
 // drawContour :: Svg -> [[Number]] -> Int -> IO ()
-export default function drawContour(svg, data, width, customZs) {
-  var zs = customZs || [-20, -9, -4.5, 0, 4.5, 9, 13.5, 18, 22.5, 50, 100, 200, 300]
+export default function drawContour(svg, data, width, customZs, reverse) {
+  var zs = customZs || [0,1,2, 4.5, 9, 13.5, 18, 22.5, 50, 100, 200, 300]
 
   var xSize = data[0].length;
   var ySize = data.length;
@@ -19,10 +19,9 @@ export default function drawContour(svg, data, width, customZs) {
     .range([0, height])
     .domain([0, ySize])
 
-
   var colours = d3.scale.linear().domain([zs[0], zs[zs.length - 1]])
-        .range([d3.rgb(0,0,0),
-               d3.rgb(180,180,180)]);
+        .range(reverse ? [d3.rgb(180,180,180), d3.rgb(0,0,0)] : [d3.rgb(0,0,0), d3.rgb(180,180,180)]);
+
 
   var isoBands = [];
   for (var i = 1; i < zs.length; i++) {
@@ -37,6 +36,7 @@ export default function drawContour(svg, data, width, customZs) {
   .data(isoBands)
   .enter().append("path")
   .style("fill",function(d) { return colours(d.val);})
+  .style("stroke-opacity",0.2)
   .style("stroke","black")
   .style('opacity', 0.5)
   .attr("d", function(d) {

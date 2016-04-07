@@ -23,7 +23,9 @@ export default class MetroPath extends Component {
     numPoints: PropTypes.number.isRequired,
     xDomain: PropTypes.array.isRequired,
     yDomain: PropTypes.array.isRequired,
-    iterations: PropTypes.number.isRequired
+    iterations: PropTypes.number.isRequired,
+    variance: PropTypes.number.isRequired,
+    acceptFunc: PropTypes.func.isRequired
   };
 
   draw(ele, withPath) {
@@ -42,8 +44,8 @@ export default class MetroPath extends Component {
   };
 
   drawPath() {
-    const { iterations, size, numPoints, xDomain, yDomain } = this.props;
-    if (this.state.svg) DrawMetroPath(iterations, xDomain, yDomain, size, numPoints, this.state.svg);
+    const { iterations, size, numPoints, xDomain, yDomain, variance, acceptFunc } = this.props;
+    if (this.state.svg) DrawMetroPath(iterations, xDomain, yDomain, size, numPoints, this.state.svg, variance, acceptFunc);
   }
 
   render() {
