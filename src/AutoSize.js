@@ -1,17 +1,5 @@
-import MarchingSquaresJS from "./MarchingSquares.js";
-import {assoc} from "ramda";
-import metropolisHastings from "./metropolis.js";
-import drawPath from "./drawPath.js";
-import Rosenbrock from "./Rosenbrock.js";
-import DrawMetroPath from "./DrawMetroPath.js";
-import drawCircle from "./drawCircle.js";
-import NumberEditor from "react-number-editor";
-import MetroPath from "./MetroPath.js";
 import React, { Component, PropTypes } from 'react';
-import RaisedButton from 'material-ui/lib/raised-button';
-import CardContainer from "./CardContainer.js";
 import { findDOMNode } from "react-dom";
-import "./interpolate";
 
 export default class AutoSize extends Component {
   constructor () {
@@ -36,47 +24,25 @@ export default class AutoSize extends Component {
   }
 
   getWidth(ele)  {
-    console.log(ele);
-    const targetWidth = this.props.width;
-    const elementWidth = ele.offsetWidth;
-    const elementHeight = ele.offsetHeight;
-    const scaleFactor = elementWidth / targetWidth;
-    const translateX = (elementWidth - targetWidth)/2;
-    const paddingY = ((elementHeight * scaleFactor) - elementHeight) / 2
-    this.setState({scaleFactor: scaleFactor, translateX: translateX, paddingY: paddingY });
+    const { width } = this.props;
+    const elementWidth = ele.offsetWidth,
+          scaleFactor = elementWidth / width;
+
+    this.setState({scaleFactor: scaleFactor});
   };
 
   render() {
-    const { scaleFactor, translateX, paddingY } = this.state;
-    console.log(paddingY,"padfoot");
-    const scale= `scale(${scaleFactor})`;
+    const { scaleFactor } = this.state;
+    const { width } = this.props;
+    const scale = `scale(${scaleFactor})`;
+    const scaledWidth = width * scaleFactor;
+    const scaledHeight = scaledWidth / 0.766;
     return (
         <div style={{width: "auto"}}>
-          <div style={{
-              position: "absolute",
-              display: [
-                          '-webkit-box',
-                          '-webkit-flex',
-                          '-ms-flexbox',
-                          'flex'
-                        ],
-              paddingLeft: translateX,
-              paddingTop: paddingY
-            }}>
-          <div style={{
-              position: "absolute",
-              display: [
-                          '-webkit-box',
-                          '-webkit-flex',
-                          '-ms-flexbox',
-                          'flex'
-                        ],
-              transform: scale, 
-              WebkitTransform: scale
-            }}>
-            {translateX}
-            {this.props.children}
-          </div>
+          <div style={{width: scaledWidth, height: scaledHeight }}>
+            <div style={{transform:scale,webkitTransform:scale,transformOrigin: "0 0",webkitTransformOrigin:"0 0"}}>
+              {this.props.children}
+            </div>
           </div>
         </div>
     );
