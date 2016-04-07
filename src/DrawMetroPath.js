@@ -9,7 +9,7 @@ import ChainDist from "./ChainDist.js";
 export default function DrawMetroPath(iterations, xDomain, yDomain, width, numPoints, svg) {
     d3.select("#metroPath").remove();
     // Generate data 
-    const chain = metropolisHastings(iterations).filter((_, i) => i % 2 == 0);
+    const chain = metropolisHastings(iterations, 0.1).filter((_, i) => i % 2 == 0);
     // Draw it
     drawPath(xDomain, yDomain, width, width, chain, svg);
 }

@@ -16,7 +16,7 @@ import "./interpolate";
 export default class MetroControls extends Component {
   constructor () {
     super();
-    this.state = { numPoints: 300, iterations: 1000 };
+    this.state = { iterations: 1000 };
     this.updateIterations = this.updateIterations.bind(this);
   }
 
@@ -31,8 +31,8 @@ export default class MetroControls extends Component {
   };
 
   render() {
-    const { numPoints, iterations } = this.state;
-    const { xDomain, yDomain, size } = this.props;
+    const { iterations } = this.state;
+    const { xDomain, yDomain, size, numPoints } = this.props;
     return (
         <CardContainer title="Metropolis-Hastings visualisation" subtitle="Rosenbrock function " width={560}>
           <div ref={this.draw}></div>

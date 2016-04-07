@@ -6,7 +6,7 @@ function transpose(m){return zeroFill(m.reduce(function(m,r){return Math.max(m,r
 
 export default function genMetroDist(iterations, xDomain, yDomain, width, numPoints) {
     // Generate data 
-    const chain = metropolisHastings(iterations);
+    const chain = metropolisHastings(iterations,0.1);
     return transpose(ChainDist(xDomain, yDomain, numPoints, chain));
 }
 

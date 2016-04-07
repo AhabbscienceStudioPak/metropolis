@@ -16,14 +16,15 @@ import "./interpolate";
 export default class MetroDistControls extends Component {
   constructor () {
     super();
-    this.state = { numPoints: 300, iterations: 1000 };
+    this.state = { iterations: 1000 };
     this.updateIterations = this.updateIterations.bind(this);
   }
 
   static propTypes = {
     size: PropTypes.number.isRequired,
     xDomain: PropTypes.array.isRequired,
-    yDomain: PropTypes.array.isRequired
+    yDomain: PropTypes.array.isRequired,
+    numPoints: PropTypes.number.isRequired
   };
 
   updateIterations(iterations)  {
@@ -31,19 +32,19 @@ export default class MetroDistControls extends Component {
   };
 
   render() {
-    const { numPoints, iterations } = this.state;
-    const { xDomain, yDomain, size } = this.props;
+    const { iterations } = this.state;
+    const { xDomain, yDomain, size, numPoints } = this.props;
     return (
         <CardContainer title="Metropolis-Hastings distribution" subtitle="Rosenbrock function " width={560}>
           <div ref={this.draw}></div>
           <br></br>
           <NumberEditor
-            step={1000}
+            step={10000}
             value={iterations}
             min={1000}
             onValueChange={this.updateIterations}
             style={{width: "5em", marginRight: "2em"}}
-            max={500000}
+            max={5000000}
             label="Iterations"
             decimals={0}
           />
