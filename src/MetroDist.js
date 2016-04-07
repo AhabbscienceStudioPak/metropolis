@@ -54,6 +54,10 @@ export default class MetroDist extends Component {
     DrawMetroDist(iterations, xDomain, yDomain, size, numPoints, this.state.svg, readyFunc);
   }
 
+  componentDidMount() {
+    this.redraw();
+  }
+
   render() {
     const { ready } = this.state;
     return (
