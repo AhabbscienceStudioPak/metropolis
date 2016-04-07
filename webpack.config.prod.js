@@ -3,17 +3,17 @@ var webpack = require('webpack');
 
 module.exports = {
   devtool: "source-map",
-  entry: './src/index.js',
+  entry: './src/mount.js',
   worker: {
     output: {
-      filename: "hash.worker.js",
-      chunkFilename: "[id].hash.worker.js"
+      filename: "metro.worker.js",
+      chunkFilename: "[id].metro.worker.js"
     }
   },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/dist/'
+    path: path.join(__dirname, 'js'),
+    filename: 'metro.js',
+    publicPath: '/js/'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
